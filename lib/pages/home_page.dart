@@ -2,6 +2,8 @@
 
 import "package:flutter/material.dart";
 import "package:wtm_weather_app/gen/assets.gen.dart";
+import "package:wtm_weather_app/pages/select_city_page.dart";
+import "package:wtm_weather_app/pages/settings_page.dart";
 
 
 
@@ -31,11 +33,15 @@ class HomePage extends StatelessWidget {
         ),
         actions: [
           IconButton(
-            onPressed: (){},
+            onPressed: (){
+              Navigator.push(context, SelectCityPage.route());
+            },
            icon: Icon(Icons.map)
            ),
            IconButton(
-            onPressed: (){},
+            onPressed: (){
+              Navigator.push(context, SettingsPage.route());
+            },
              icon: Icon(Icons.settings))
         ],
 
@@ -76,16 +82,28 @@ class HomePage extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text("09:18am",
-                    style: TextStyle(
-                      fontSize: 18
-                    ),
+                    Row(
+                      children: [
+                       // Assets.sunrise.image(),
+                        SizedBox(width: 8,),
+                        Text("09:18am",
+                        style: TextStyle(
+                          fontSize: 18
+                        ),
+                        ),
+                      ],
                     ),
                     SizedBox(width: 16,),
-                    Text("09:18am",
-                    style: TextStyle(
-                      fontSize: 18
-                    ),),
+                    Row(
+                      children: [
+                       // Assets.sunset.image(),
+                        SizedBox(width: 8,),
+                        Text("09:18am",
+                        style: TextStyle(
+                          fontSize: 18
+                        ),),
+                      ],
+                    ),
                   ]),
               )
             ],
