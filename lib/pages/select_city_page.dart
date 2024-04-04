@@ -23,7 +23,7 @@ class SelectCityPage extends StatelessWidget {
         padding: EdgeInsets.all(16),
         children: [
           ListTile(
-            title: Text("Mumbai"),
+            title: Text("Ibadan"),
             trailing: Assets.drizzle.image(
               height: 30,
               width: 30
