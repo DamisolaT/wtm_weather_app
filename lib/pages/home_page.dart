@@ -4,14 +4,28 @@ import "package:flutter/material.dart";
 import "package:flutter_bloc/flutter_bloc.dart";
 import "package:wtm_weather_app/blocs/weather_bloc.dart";
 import "package:wtm_weather_app/blocs/weather_state.dart";
+
 import "package:wtm_weather_app/gen/assets.gen.dart";
 import "package:wtm_weather_app/pages/select_city_page.dart";
 import "package:wtm_weather_app/pages/settings_page.dart";
+import "package:wtm_weather_app/widgets/weather_loaded_ui.dart";
 
 
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+
+@override
+  void initState() {
+    super.initState();
+    context.read<WeatherBloc>().fetchWeather();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -19,33 +33,34 @@ class HomePage extends StatelessWidget {
     WeatherState state = bloc.state;
 
     Widget uiToBeShown = Center(
-      child: CircularProgressIndicator()
-
-    );
+      child: CircularProgressIndicator(),);
 
     switch(state.weatherStatus){
       
       case WeatherStatus.initial:
-        // Noting
+        // Nothing.
       case WeatherStatus.error:
-       uiToBeShown = Center(child: Text("An error occured, check your network connection!"),);
-      case WeatherStatus.successful:
-       uiToBeShown = WeatherLoadedUI();
-        default:
-        break;
+        uiToBeShown = Center(child: Text("An error occured. Check your network connection"),
+        );
+      case WeatherStatus.success:
+        uiToBeShown = WeatherLoadedUI();
+      default:
+      break;
     }
-    return Scaffold(
+  return Scaffold(
       appBar: AppBar(
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-          Text("MUMBAI",
+          Text(
+            "Ibadan",
           style: TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.bold
           ),
           ),
-          Text("Current location",
+          Text(
+            "Current location",
            style: TextStyle(
             fontSize: 12, 
             color: Colors.grey
@@ -70,79 +85,5 @@ class HomePage extends StatelessWidget {
       ),
       body: uiToBeShown,
     );
-  }
-}
-
-class WeatherLoadedUI extends StatelessWidget {
-  const WeatherLoadedUI({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-    padding: EdgeInsets.symmetric(horizontal: 16, vertical: 24),
-     child: Column(
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
-      crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Container(
-              child: Column(
-                children: [
-                  Text("Friday 22, December, 2024",
-                  style: TextStyle(
-                    fontSize: 18
-                  ),),
-                  Text("22'C", 
-                  style: TextStyle(
-                    fontSize: 96
-                  ),)
-                ],
-              ),
-            ),
-            Container(
-              child: Column(
-                children: [
-                  Assets.drizzle.image(),
-                  Text("Light Drizzle",
-                  style: TextStyle(
-                    fontSize: 18
-                  ),
-                  )
-                ]
-                ),
-            ),
-            Container(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Row(
-                    children: [
-                      Assets.sunrise.image(),
-                      SizedBox(width: 8,),
-                      Text("09:18am",
-                      style: TextStyle(
-                        fontSize: 18
-                      ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(width: 16,),
-                  Row(
-                    children: [
-                      Assets.sunset.image(),
-                      SizedBox(width: 8,),
-                      Text("09:18am",
-                      style: TextStyle(
-                        fontSize: 18
-                      ),),
-                    ],
-                  ),
-                ]),
-            )
-          ],
-          )
-         
-          );
   }
 }

@@ -3,7 +3,7 @@ import 'package:wtm_weather_app/models/current.dart';
 import 'package:wtm_weather_app/models/units_model.dart';
 
 part 'weather_response.freezed.dart';
-part 'weather_response.g.dart';go
+part 'weather_response.g.dart';
 
 @freezed
 class WeatherResponse with _$WeatherResponse{
@@ -11,7 +11,7 @@ class WeatherResponse with _$WeatherResponse{
     required double latitude,
     required double  longitude,
     required double elevation,
-    @JsonValue("current_units")required UnitsModel currentUnits,
+    required UnitsModel current_units,
     required Current current,
   }) = _WeatherResponse;
 
